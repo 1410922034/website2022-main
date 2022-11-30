@@ -1,0 +1,15 @@
+@keyframes example {
+    from {left:0px; top:0px;}
+    to {left:200px; top:0px;}
+  }
+  
+  /* The element to apply the animation to */
+  div {
+    position: relative;
+
+  /*  要執行的 animation 名稱   */
+    animation-name: example;
+  /*  執行過程秒數  */
+    animation-duration: 8s; 
+  }
+  

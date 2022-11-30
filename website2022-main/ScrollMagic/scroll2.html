@@ -1,0 +1,95 @@
+<!DECTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ScrollMagic 1</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/ScrollMagic.min.js" integrity="sha512-8E3KZoPoZCD+1dgfqhPbejQBnQfBXe8FuwL4z/c8sTrgeDMFEnoyTlH3obB4/fV+6Sg0a0XF+L/6xS4Xx1fUEg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/plugins/debug.addIndicators.min.js" integrity="sha512-RvUydNGlqYJapy0t4AH8hDv/It+zKsv4wOQGb+iOnEfa6NnF2fzjXgRy+FDjSpMfC3sjokNUzsfYZaZ8QAwIxg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/plugins/animation.gsap.min.js" integrity="sha512-5/OHwmQzDSBS0Ous4/hlYoWLHd06/d2r7LdKZQVBXOA6PvOqWVXtdboiLTU7lQTGyVoKVTNkwi0ol4gHGlw5ww==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.14.2/TweenMax.min.js"></script>
+        <style>
+            img.sticky {
+              position: -webkit-sticky;
+              position: sticky;
+              top: 0;
+              width: 200px;
+            }
+            </style>
+    </head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style type="text/css">
+	#pinContainer {
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		-webkit-perspective: 1000;
+		        perspective: 1000;
+	}
+	#slideContainer {
+		width: 400%; /* to contain 4 panels, each with 100% of window width */
+		height: 100%;
+	}
+	.panel {
+		height: 100%;
+		width: 25%; /* relative to parent -> 25% of 400% = 100% of window width */
+		float: left;
+	}
+</style>
+</head>
+<body>
+
+    <div id="pinContainer">
+        <div id="slideContainer">
+            <section class="panel blue">
+                <b>ONE</b>
+            </section>
+            <section class="panel turqoise">
+                <b>TWO</b>
+            </section>
+            <section class="panel green">
+                <b>THREE</b>
+            </section>
+            <section class="panel bordeaux">
+                <b>FOUR</b>
+            </section>
+        </div>
+    </div>
+    <script>
+        $(function () { // wait for document ready
+            // init
+            var controller = new ScrollMagic.Controller();
+    
+            // define movement of panels
+            var wipeAnimation = new TimelineMax()
+                // animate to second panel
+                .to("#slideContainer", 0.5, {z: -150})		// move back in 3D space
+                .to("#slideContainer", 1,   {x: "-25%"})	// move in to first panel
+                .to("#slideContainer", 0.5, {z: 0})				// move back to origin in 3D space
+                // animate to third panel
+                .to("#slideContainer", 0.5, {z: -150, delay: 1})
+                .to("#slideContainer", 1,   {x: "-50%"})
+                .to("#slideContainer", 0.5, {z: 0})
+                // animate to forth panel
+                .to("#slideContainer", 0.5, {z: -150, delay: 1})
+                .to("#slideContainer", 1,   {x: "-75%"})
+                .to("#slideContainer", 0.5, {z: 0});
+    
+            // create scene to pin and link animation
+            new ScrollMagic.Scene({
+                    triggerElement: "#pinContainer",
+                    triggerHook: "onLeave",
+                    duration: "500%"
+                })
+                .setPin("#pinContainer")
+                .setTween(wipeAnimation)
+                .addIndicators() // add indicators (requires plugin)
+                .addTo(controller);
+        });
+    </script>
+
+    
+
+</body>
+</html>
